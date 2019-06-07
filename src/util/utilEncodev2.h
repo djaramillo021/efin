@@ -10,6 +10,9 @@
 #ifndef BITCOIN_UTIL_UTILENCODEV2_H
 #define BITCOIN_UTIL_UTILENCODEV2_H
 
+#include <utility>
+#include <vector>
+
 namespace utilv2 {
 
 #ifdef WIN32
