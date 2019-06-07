@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <util/utilEncodev2.h>
-
+#include <iostream>
 #include <codecvt>
 
 
