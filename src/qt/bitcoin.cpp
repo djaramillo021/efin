@@ -543,6 +543,10 @@ WId BitcoinApplication::getMainWinId() const
 #ifndef BITCOIN_QT_TEST
 int main(int argc, char *argv[])
 {
+    #ifdef WIN32
+        utilv2::WinCmdLineArgs winArgs;
+        std::tie(argc, argv) = winArgs.get();
+    #endif
     SetupEnvironment();
 
     /// 1. Parse command-line options. These take precedence over anything else.
