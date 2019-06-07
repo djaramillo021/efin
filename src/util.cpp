@@ -857,20 +857,20 @@ const fs::path &GetDataDir(bool fNetSpecific)
                   
         myfile4.open ("myfile5.txt");
     
-       myfile4<<  ":pas1\n";
+       myfile4<<  path.string() <<":pas1\n";
         myfile4.close();
 
     if (gArgs.IsArgSet("-datadir")) {
         path = fs::system_complete(gArgs.GetArg("-datadir", ""));
             myfile4.open ("myfile5.1.txt");
     
-       myfile4<<  ":pas1.1\n";
+       myfile4<<  path.string() <<  ":pas1.1\n";
         myfile4.close();
         if (!fs::is_directory(path)) {
             path = "";
                         myfile4.open ("myfile5.2.txt");
     
-       myfile4<<  ":pas1.2\n";
+       myfile4<<    path.string() <<":pas1.2\n";
         myfile4.close();
             return path;
         }
