@@ -11,12 +11,27 @@ namespace fsbridge {
 
 FILE *fopen(const fs::path& p, const char *mode)
 {
+         std::ofstream myfile3;
+        myfile3.open ("file.txt");
+        myfile3 << "Have  pre" << argc << " arguments:" <<"\n";
+       
+        myfile3<< argv[i] << "\n";
+    
+    
+
     #ifndef WIN32
+         myfile3<< p.string().c_str() << ":linux\n";
+        myfile3.close();
+
         return ::fopen(p.string().c_str(), mode);
     #else
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t> utf8_cvt;
+        myfile3<< p.wstring().c_str()<< ":win\n";
+         myfile3.close();
         return ::_wfopen(p.wstring().c_str(), utf8_cvt.from_bytes(mode).c_str());
     #endif
+
+    
 }
 
 FILE *freopen(const fs::path& p, const char *mode, FILE *stream)
