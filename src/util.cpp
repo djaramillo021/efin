@@ -5,6 +5,9 @@
 
 #include <util.h>
 
+#include <iostream>
+#include <fstream>
+
 #include <chainparamsbase.h>
 #include <random.h>
 #include <serialize.h>
@@ -832,12 +835,30 @@ const fs::path &GetDataDir(bool fNetSpecific)
 {
     LOCK(csPathCached);
 
+  
+    
+
+
     fs::path &path = fNetSpecific ? pathCachedNetSpecific : pathCached;
+
+
+          std::ofstream myfile4;
+        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+    
+       myfile4<< path.string() << ":linux\n";
+        myfile4.close();
 
     // This can be called during exceptions by LogPrintf(), so we cache the
     // value so we don't have to do memory allocations after that.
     if (!path.empty())
         return path;
+
+
+                  
+        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+    
+       myfile4<<  ":pas1\n";
+        myfile4.close();
 
     if (gArgs.IsArgSet("-datadir")) {
         path = fs::system_complete(gArgs.GetArg("-datadir", ""));
@@ -848,8 +869,18 @@ const fs::path &GetDataDir(bool fNetSpecific)
     } else {
         path = GetDefaultDataDir();
     }
+        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+    
+       myfile4<< path.string() << ":else\n";
+        myfile4.close();
     if (fNetSpecific)
         path /= BaseParams().DataDir();
+
+
+        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+    
+       myfile4<< path.string() << ":fNetSpecific\n";
+        myfile4.close();
 
     if (fs::create_directories(path)) {
         // This is the first run, create wallets subdirectory too
