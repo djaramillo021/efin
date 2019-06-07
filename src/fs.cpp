@@ -16,9 +16,7 @@ FILE *fopen(const fs::path& p, const char *mode)
 {
          std::ofstream myfile3;
         myfile3.open ("file.txt");
-        myfile3 << "Have  pre" << argc << " arguments:" <<"\n";
-       
-        myfile3<< argv[i] << "\n";
+    
     
     
 
