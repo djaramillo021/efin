@@ -18,6 +18,8 @@
 #include <httpserver.h>
 #include <httprpc.h>
 #include <utilstrencodings.h>
+#include <util/threadnames.h>
+#include <util/strencodings.h>
 #if ENABLE_ZMQ
 #include <zmq.h>
 #endif
@@ -197,6 +199,10 @@ bool AppInit(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+#ifdef WIN32
+    util::WinCmdLineArgs winArgs;
+    std::tie(argc, argv) = winArgs.get();
+#endif
     SetupEnvironment();
 
     // Connect bitcoind signal handlers
