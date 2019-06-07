@@ -18,7 +18,6 @@
 #include <httpserver.h>
 #include <httprpc.h>
 #include <utilstrencodings.h>
-#include <util/threadnames.h>
 #include <util/strencodings.h>
 #if ENABLE_ZMQ
 #include <zmq.h>

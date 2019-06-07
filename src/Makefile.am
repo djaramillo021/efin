@@ -446,6 +446,7 @@ libefin_util_a_SOURCES = \
   support/cleanse.cpp \
   sync.cpp \
   threadinterrupt.cpp \
+  util/strencodings.cpp \
   util.cpp \
   utilmoneystr.cpp \
   utilstrencodings.cpp \
