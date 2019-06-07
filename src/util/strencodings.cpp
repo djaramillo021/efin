@@ -13,6 +13,9 @@
 #include <errno.h>
 #include <limits>
 
+namespace utilEncodev2
+{
+
 static const std::string CHARS_ALPHA_NUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 static const std::string SAFE_CHARS[] =
@@ -556,4 +559,5 @@ std::string Capitalize(std::string str)
     if (str.empty()) return str;
     str[0] = ToUpper(str.front());
     return str;
+}
 }
