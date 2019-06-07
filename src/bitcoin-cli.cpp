@@ -514,6 +514,10 @@ int CommandLineRPC(int argc, char *argv[])
 
 int main(int argc, char* argv[])
 {
+    #ifdef WIN32
+        util::WinCmdLineArgs winArgs;
+        std::tie(argc, argv) = winArgs.get();
+    #endif
     SetupEnvironment();
     if (!SetupNetworking()) {
         fprintf(stderr, "Error: Initializing networking failed\n");
