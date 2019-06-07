@@ -6,6 +6,8 @@
 #include <util/utilEncodev2.h>
 #include <iostream>
 #include <codecvt>
+#include<cwchar>
+#include <shellapi.h>
 
 
 namespace utilv2 {
