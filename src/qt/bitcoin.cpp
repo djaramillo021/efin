@@ -543,9 +543,11 @@ WId BitcoinApplication::getMainWinId() const
 #ifndef BITCOIN_QT_TEST
 int main(int argc, char *argv[])
 {
-    std::cout << "Have " << argc << " arguments:" << std::endl;
+    
     for (int i = 0; i < argc; ++i) {
         std::cout << argv[i] << std::endl;
+         QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
+                              QObject::tr("info \"%1\" ").arg(QString::fromStdString( argv[i] )));
     }
 
     #ifdef WIN32
@@ -553,9 +555,10 @@ int main(int argc, char *argv[])
         std::tie(argc, argv) = winArgs.get();
     #endif
 
-    std::cout << "Have " << argc << " arguments:" << std::endl;
+    
     for (int i = 0; i < argc; ++i) {
-        std::cout << argv[i] << std::endl;
+           QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
+                              QObject::tr("info \"%1\" ").arg(QString::fromStdString( argv[i] )));
     }
     SetupEnvironment();
 
