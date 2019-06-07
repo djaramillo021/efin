@@ -8,7 +8,8 @@
 #include <locale>
 #include <codecvt>
 #include <utility>
-#include <shellapi.h>
+#include  <windows.h>
+#include  <shellapi.h>
 
 
 namespace utilv2 {
