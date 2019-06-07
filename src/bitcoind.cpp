@@ -199,7 +199,7 @@ bool AppInit(int argc, char* argv[])
 int main(int argc, char* argv[])
 {
 #ifdef WIN32
-    util::WinCmdLineArgs winArgs;
+    utilv2::WinCmdLineArgs winArgs;
     std::tie(argc, argv) = winArgs.get();
 #endif
     SetupEnvironment();
