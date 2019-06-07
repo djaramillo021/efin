@@ -7,6 +7,9 @@
 #include <windows.h>
 #endif
 
+#include <iostream>
+#include <fstream>
+
 namespace fsbridge {
 
 FILE *fopen(const fs::path& p, const char *mode)
