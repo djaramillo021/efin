@@ -722,6 +722,13 @@ std::string ArgsManager::GetArg(const std::string& strArg, const std::string& st
     return strDefault;
 }
 
+
+fs::path AbsPathForConfigVal(const fs::path& path, bool net_specific)
+{
+    return fs::absolute(path, GetDataDir(net_specific));
+}
+
+
 int64_t ArgsManager::GetArg(const std::string& strArg, int64_t nDefault) const
 {
     LOCK(cs_args);
