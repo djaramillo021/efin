@@ -14,7 +14,7 @@
 #include <rpc/protocol.h>
 #include <util.h>
 #include <utilstrencodings.h>
-#include <util/strencodings.h>
+#include <util/utilEncodev2.h>
 #include <stdio.h>
 
 #include <event2/buffer.h>

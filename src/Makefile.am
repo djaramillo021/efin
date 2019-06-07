@@ -87,7 +87,6 @@ BITCOIN_CORE_H = \
   timestampindex.h \
   rctindex.h \
   addrman.h \
-  attributes.h \
   base58.h \
   bech32.h \
   bloom.h \
@@ -389,8 +388,8 @@ libefin_consensus_a_SOURCES = \
   uint256.h \
   utilstrencodings.cpp \
   utilstrencodings.h \
-  util/strencodings.cpp \
-  util/strencodings.h \
+  util/utilEncodev2.cpp \
+  util/utilEncodev2.h \
   version.h
 
 # common: shared between bitcoind, and bitcoin-qt and non-server tools
@@ -447,7 +446,7 @@ libefin_util_a_SOURCES = \
   support/cleanse.cpp \
   sync.cpp \
   threadinterrupt.cpp \
-  util/strencodings.cpp \
+  util/utilEncodev2.cpp \
   util.cpp \
   utilmoneystr.cpp \
   utilstrencodings.cpp \
