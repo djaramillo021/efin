@@ -12,9 +12,9 @@
 #include <fs.h>
 #include <rpc/client.h>
 #include <rpc/protocol.h>
-#include <util/system.h>
+#include <util.h>
+#include <utilstrencodings.h>
 #include <util/strencodings.h>
-
 #include <stdio.h>
 
 #include <event2/buffer.h>
@@ -515,7 +515,7 @@ int CommandLineRPC(int argc, char *argv[])
 int main(int argc, char* argv[])
 {
     #ifdef WIN32
-        util::WinCmdLineArgs winArgs;
+        utilv2::WinCmdLineArgs winArgs;
         std::tie(argc, argv) = winArgs.get();
     #endif
     SetupEnvironment();

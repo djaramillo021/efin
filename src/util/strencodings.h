@@ -18,6 +18,11 @@
 
 #define ARRAYLEN(array)     (sizeof(array)/sizeof((array)[0]))
 
+
+namespace utilEncodev2
+{
+
+
 /** Used by SanitizeString() */
 enum SafeChars
 {
@@ -238,5 +243,5 @@ constexpr char ToUpper(char c)
  * @return          string with the first letter capitalized.
  */
 std::string Capitalize(std::string str);
-
+}
 #endif // BITCOIN_UTIL_STRENCODINGS_H

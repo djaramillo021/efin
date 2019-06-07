@@ -67,6 +67,8 @@
 
 #include <thread>
 
+namespace utilEncodev2
+{
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
@@ -1449,8 +1451,10 @@ int ScheduleBatchPriority()
     return 1;
 #endif
 }
+}
 
-namespace util {
+
+namespace utilv2 {
 #ifdef WIN32
 WinCmdLineArgs::WinCmdLineArgs()
 {
