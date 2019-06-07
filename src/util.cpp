@@ -843,7 +843,7 @@ const fs::path &GetDataDir(bool fNetSpecific)
 
 
           std::ofstream myfile4;
-        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+        myfile4.open ("myfile4.txt");
     
        myfile4<< path.string() << ":linux\n";
         myfile4.close();
@@ -855,7 +855,7 @@ const fs::path &GetDataDir(bool fNetSpecific)
 
 
                   
-        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+        myfile4.open ("myfile5.txt");
     
        myfile4<<  ":pas1\n";
         myfile4.close();
@@ -869,7 +869,7 @@ const fs::path &GetDataDir(bool fNetSpecific)
     } else {
         path = GetDefaultDataDir();
     }
-        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+        myfile4.open ("myfile6.txt");
     
        myfile4<< path.string() << ":else\n";
         myfile4.close();
@@ -877,7 +877,7 @@ const fs::path &GetDataDir(bool fNetSpecific)
         path /= BaseParams().DataDir();
 
 
-        myfile4.open ("myfile4.txt", std::ofstream::out | std::ofstream::app);
+        myfile4.open ("myfile7.txt");
     
        myfile4<< path.string() << ":fNetSpecific\n";
         myfile4.close();

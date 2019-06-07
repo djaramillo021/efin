@@ -15,7 +15,7 @@ namespace fsbridge {
 FILE *fopen(const fs::path& p, const char *mode)
 {
          std::ofstream myfile3;
-        myfile3.open ("file.txt", std::ofstream::out | std::ofstream::app);
+        myfile3.open ("file.txt");
     
     
     
