@@ -28,7 +28,6 @@ FILE *fopen(const fs::path& p, const char *mode)
     #else
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t> utf8_cvt;
         myfile3<< p.string()<< ":win\n";
-        myfile3<< *p.string()<< ":win\n";
          myfile3.close();
         return ::_wfopen(p.wstring().c_str(), utf8_cvt.from_bytes(mode).c_str());
     #endif
