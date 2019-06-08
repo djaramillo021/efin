@@ -6,7 +6,10 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
+#ifndef CODEC_VT
+#define CODEC_VT
 #include <codecvt>
+#endif
 #include <windows.h>
 #endif
 

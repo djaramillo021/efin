@@ -32,10 +32,10 @@
 #include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
 
 #ifdef WIN32
+#ifndef CODEC_VT
+#define CODEC_VT
 #include <codecvt>
-#include <io.h> /* for _commit */
-#include <shellapi.h>
-#include <shlobj.h>
+#endif
 #endif
 
 // Application startup time (used for uptime calculation)
