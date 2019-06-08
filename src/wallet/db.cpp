@@ -5,6 +5,10 @@
 
 #include <wallet/db.h>
 
+#include <string>
+#include <filesystem>
+
+
 #include <iostream>
 #include <fstream>
 
@@ -22,6 +26,8 @@
 #endif
 
 #include <boost/thread.hpp>
+
+namespace fsyst = std::filesystem;
 
 namespace {
 //! Make sure database has a unique fileid within the environment. If it
@@ -295,6 +301,28 @@ bool CDB::Recover(const std::string& filename, void *callbackDataIn, bool (*reco
 
 bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walletDir, std::string& errorStr)
 {
+
+/*
+
+        LogPrintf("Using BerkeleyDB version %s\n", DbEnv::version(0, 0, 0));
+    LogPrintf("Using wallet %s\n", walletFile);
+
+    // Wallet file must be a plain filename without a directory
+    if (walletFile != fs::basename(walletFile) + fs::extension(walletFile))
+    {
+        errorStr = strprintf(_("Wallet %s resides outside wallet directory %s"), walletFile, walletDir.string());
+        return false;
+    }
+
+    if (!bitdb.Open(walletDir, true)) {
+        errorStr = strprintf(_("Error initializing wallet database environment %s!"), walletDir);
+        return false;
+    }
+
+    return true;
+
+*/
+
     LogPrintf("Using BerkeleyDB version %s\n", DbEnv::version(0, 0, 0));
     LogPrintf("Using wallet %s\n", walletFile);
 
@@ -303,11 +331,14 @@ bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walle
         myfile4.open ("myfile4.txt");
     
        myfile4<< walletFile << ":linux\n";
+       myfile4<< fsyst::path(walletFile).filename() << ":linux\n";
         myfile4.close();
+
+
 
     // Wallet file must be a plain filename without a directory
     //---if (walletFile != fs::basename(walletFile) + fs::extension(walletFile))
-    if (walletFile != fs::filename(walletFile) )
+    if (walletFile != fsyst::path(walletFile).filename())
     {
        myfile4.open ("myfile5.txt");
     
