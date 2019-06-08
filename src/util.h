@@ -38,6 +38,14 @@
 #endif
 #endif
 
+#ifndef SHELL_API
+#define SHELL_API
+#include <shellapi.h>
+#include <shlobj.h>
+#include <shlwapi.h>
+#endif
+
+
 // Application startup time (used for uptime calculation)
 int64_t GetStartupTime();
 
