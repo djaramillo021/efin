@@ -310,7 +310,7 @@ bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walle
         return false;
     }
 
-    if (!bitdb.Open(walletDir, true)) {
+    if (!bitdb.Open(walletDir.string(), true)) {
         errorStr = strprintf(_("Error initializing wallet database environment %s!"), walletDir);
         return false;
     }
