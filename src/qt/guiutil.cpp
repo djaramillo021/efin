@@ -30,9 +30,14 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
+
+#ifndef SHELL_API
+#define SHELL_API
 #include <shellapi.h>
 #include <shlobj.h>
 #include <shlwapi.h>
+#endif
+
 #endif
 
 #include <boost/scoped_array.hpp>
