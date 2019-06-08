@@ -228,7 +228,7 @@ bool Intro::pickDataDirectory()
           std::ofstream myfile4;
         myfile4.open ("myfile4gg.txt");
 
-       myfile4<< dataDir << ":linux\n";
+       myfile4<< GUIUtil::qstringToBoostPath(dataDir).string() << ":linux\n";
         myfile4.close();
                     // If a new data directory has been created, make wallets subdirectory too
                     TryCreateDirectories(GUIUtil::qstringToBoostPath(dataDir) / "wallets");
