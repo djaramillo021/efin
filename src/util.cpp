@@ -405,7 +405,11 @@ int LogPrintStr(const std::string &str)
  * cleans them up and thus automatically unlocks them, or ReleaseDirectoryLocks
  * is called.
  */
-static std::map<std::string, std::unique_ptr<boost::interprocess::file_lock>> dir_locks;
+//--static std::map<std::string, std::unique_ptr<boost::interprocess::file_lock>> dir_locks;
+/** Mutex to protect dir_locks. */
+//--static std::mutex cs_dir_locks;
+
+static std::map<std::string, std::unique_ptr<fsbridge::FileLock>> dir_locks;
 /** Mutex to protect dir_locks. */
 static std::mutex cs_dir_locks;
 
