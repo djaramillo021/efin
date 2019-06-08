@@ -201,7 +201,6 @@ bool RenameOver(fs::path src, fs::path dest);
 bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only=false);
 
 
-
 /**
  * Most paths passed as configuration arguments are treated as relative to
  * the datadir if they are not absolute.

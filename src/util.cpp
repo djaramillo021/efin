@@ -407,7 +407,7 @@ int LogPrintStr(const std::string &str)
 static std::map<std::string, std::unique_ptr<boost::interprocess::file_lock>> dir_locks;
 /** Mutex to protect dir_locks. */
 static std::mutex cs_dir_locks;
-
+/*
 bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only)
 {
     std::lock_guard<std::mutex> ulock(cs_dir_locks);
@@ -436,23 +436,35 @@ bool LockDirectory(const fs::path& directory, const std::string lockfile_name, b
     }
     return true;
 }
+*/
 
 
-
-
-
-bool DirIsWritable(const fs::path& directory)
+bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only)
 {
-    fs::path tmpFile = directory / fs::unique_path();
+    std::lock_guard<std::mutex> ulock(cs_dir_locks);
+    fs::path pathLockFile = directory / lockfile_name;
 
-    FILE* file = fsbridge::fopen(tmpFile, "a");
-    if (!file) return false;
+    // If a lock for this directory already exists in the map, don't try to re-lock it
+    if (dir_locks.count(pathLockFile.string())) {
+        return true;
+    }
 
-    fclose(file);
-    remove(tmpFile);
-
+    // Create empty lock file if it doesn't exist.
+    FILE* file = fsbridge::fopen(pathLockFile, "a");
+    if (file) fclose(file);
+    auto lock = MakeUnique<fsbridge::FileLock>(pathLockFile);
+    if (!lock->TryLock()) {
+        return error("Error while attempting to lock directory %s: %s", directory.string(), lock->GetReason());
+    }
+    if (!probe_only) {
+        // Lock successful and we're not just probing, put it into the map
+        dir_locks.emplace(pathLockFile.string(), std::move(lock));
+    }
     return true;
 }
+
+
+
 
 void ReleaseDirectoryLocks()
 {
