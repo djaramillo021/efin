@@ -8,6 +8,7 @@
 
 
 #include <qt/bitcoingui.h>
+#include <util/utilEncodev2.h>
 #include <chainparams.h>
 #include <qt/clientmodel.h>
 #include <fs.h>

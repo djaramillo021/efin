@@ -429,27 +429,3 @@ std::unique_ptr<T> MakeUnique(Args&&... args)
 
 
 
-namespace utilv2 {
-
-
-#ifdef WIN32
-#ifndef WINCMD
-#define WINCMD
-class WinCmdLineArgs
-{
-public:
-    WinCmdLineArgs();
-    ~WinCmdLineArgs();
-    std::pair<int, char**> get();
-
-private:
-    int argc;
-    char** argv;
-    std::vector<std::string> args;
-};
-#endif
-
-} // namespace util
-#endif
-
-#endif // BITCOIN_UTIL_H
