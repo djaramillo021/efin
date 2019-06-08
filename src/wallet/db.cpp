@@ -294,7 +294,7 @@ bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walle
 {
     LogPrintf("Using BerkeleyDB version %s\n", DbEnv::version(0, 0, 0));
     LogPrintf("Using wallet %s\n", walletFile);
-
+/*
     // Wallet file must be a plain filename without a directory
     //---if (walletFile != fs::basename(walletFile) + fs::extension(walletFile))
     if (walletFile != fs::filename(walletFile) )
@@ -307,6 +307,7 @@ bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walle
         errorStr = strprintf(_("Error initializing wallet database environment %s!"), walletDir);
         return false;
     }
+    */
 
     return true;
 }
