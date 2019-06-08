@@ -430,7 +430,7 @@ bool LockDirectory(const fs::path& directory, const std::string lockfile_name, b
 
     //try {
         auto lock = MakeUnique<fsbridge::FileLock>(pathLockFile.string().c_str());
-        if (!lock->try_lock()) {
+        if (!lock->TryLock()) {
             return false;
         }
         if (!probe_only) {
