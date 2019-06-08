@@ -1157,13 +1157,25 @@ void SetupEnvironment()
     } catch (const std::runtime_error&) {
         setenv("LC_ALL", "C", 1);
     }
+#elif defined(WIN32)
+    // Set the default input/output charset is utf-8
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
 #endif
     // The path locale is lazy initialized and to avoid deinitialization errors
     // in multithreading environments, it is set explicitly by the main thread.
     // A dummy locale is used to extract the internal default locale, used by
     // fs::path, which is then used to explicitly imbue the path.
     std::locale loc = fs::path::imbue(std::locale::classic());
-    fs::path::imbue(loc);
+    
+    
+    //--fs::path::imbue(loc);
+    #ifndef WIN32
+        fs::path::imbue(loc);
+    #else
+        fs::path::imbue(std::locale(loc, new std::codecvt_utf8_utf16<wchar_t>()));
+    #endif
+
 }
 
 bool SetupNetworking()
