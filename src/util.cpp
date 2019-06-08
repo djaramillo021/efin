@@ -470,6 +470,11 @@ static void InterpretNegativeSetting(std::string& strKey, std::string& strValue)
     }
 }
 
+constexpr char ToLower(char c)
+{
+    return (c >= 'A' && c <= 'Z' ? (c - 'A') + 'a' : c);
+}
+
 void ArgsManager::ParseParameters(int argc, const char* const argv[])
 {
     LOCK(cs_args);
