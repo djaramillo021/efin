@@ -5,8 +5,7 @@
 #if defined(HAVE_CONFIG_H)
 #include <config/bitcoin-config.h>
 #endif
-#include <iostream>
-#include <fstream>
+
 
 #include <qt/bitcoingui.h>
 #include <util/utilEncodev2.h>
@@ -545,28 +544,11 @@ WId BitcoinApplication::getMainWinId() const
 #ifndef BITCOIN_QT_TEST
 int main(int argc, char *argv[])
 {
-     std::ofstream myfile;
-        myfile.open ("example.txt");
-        myfile << "Have  pre" << argc << " arguments:" <<"\n";
-       
-    for (int i = 0; i < argc; ++i) {
-        myfile<< argv[i] << "\n";
-    }
-     myfile.close();
-
     #ifdef WIN32
         utilv2::WinCmdLineArgs winArgs;
         std::tie(argc, argv) = winArgs.get();
     #endif
 
-     std::ofstream myfilepost;
-        myfilepost.open ("examplepos.txt");
-        myfilepost << "Have  pos" << argc << " arguments:" <<"\n";
-       
-    for (int i = 0; i < argc; ++i) {
-        myfilepost<< argv[i] << "\n";
-    }
-     myfilepost.close();
     SetupEnvironment();
 
     /// 1. Parse command-line options. These take precedence over anything else.

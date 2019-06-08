@@ -4,10 +4,6 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <util.h>
-
-#include <iostream>
-#include <fstream>
-
 #include <chainparamsbase.h>
 #include <random.h>
 #include <serialize.h>
@@ -850,61 +846,26 @@ static CCriticalSection csPathCached;
 const fs::path &GetDataDir(bool fNetSpecific)
 {
     LOCK(csPathCached);
-
-  
-    
-
-
     fs::path &path = fNetSpecific ? pathCachedNetSpecific : pathCached;
-
-
-          std::ofstream myfile4;
-        myfile4.open ("myfile4.txt");
-    
-       myfile4<< path.string() << ":linux\n";
-        myfile4.close();
 
     // This can be called during exceptions by LogPrintf(), so we cache the
     // value so we don't have to do memory allocations after that.
     if (!path.empty())
         return path;
 
-
-                  
-        myfile4.open ("myfile5.txt");
-    
-       myfile4<<  path.string() <<":pas1\n";
-        myfile4.close();
-
     if (gArgs.IsArgSet("-datadir")) {
         path = fs::system_complete(gArgs.GetArg("-datadir", ""));
-            myfile4.open ("myfile5.1.txt");
-    
-       myfile4<<  path.string() <<  ":pas1.1\n";
-        myfile4.close();
         if (!fs::is_directory(path)) {
             path = "";
-                        myfile4.open ("myfile5.2.txt");
-    
-       myfile4<<    path.string() <<":pas1.2\n";
-        myfile4.close();
             return path;
         }
     } else {
         path = GetDefaultDataDir();
     }
-        myfile4.open ("myfile6.txt");
-    
-       myfile4<< path.string() << ":else\n";
-        myfile4.close();
+
     if (fNetSpecific)
         path /= BaseParams().DataDir();
 
-
-        myfile4.open ("myfile7.txt");
-    
-       myfile4<< path.string() << ":fNetSpecific\n";
-        myfile4.close();
 
     if (fs::create_directories(path)) {
         // This is the first run, create wallets subdirectory too
