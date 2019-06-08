@@ -8,10 +8,6 @@
 #include <string>
 
 
-
-#include <iostream>
-#include <fstream>
-
 #include <addrman.h>
 #include <hash.h>
 #include <protocol.h>
@@ -302,58 +298,21 @@ bool CDB::Recover(const std::string& filename, void *callbackDataIn, bool (*reco
 bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walletDir, std::string& errorStr)
 {
 
-/*
-
-        LogPrintf("Using BerkeleyDB version %s\n", DbEnv::version(0, 0, 0));
-    LogPrintf("Using wallet %s\n", walletFile);
-
-    // Wallet file must be a plain filename without a directory
-    if (walletFile != fs::basename(walletFile) + fs::extension(walletFile))
-    {
-        errorStr = strprintf(_("Wallet %s resides outside wallet directory %s"), walletFile, walletDir.string());
-        return false;
-    }
-
-    if (!bitdb.Open(walletDir, true)) {
-        errorStr = strprintf(_("Error initializing wallet database environment %s!"), walletDir);
-        return false;
-    }
-
-    return true;
-
-*/
 
     LogPrintf("Using BerkeleyDB version %s\n", DbEnv::version(0, 0, 0));
     LogPrintf("Using wallet %s\n", walletFile);
 
-
-          std::ofstream myfile4;
-        myfile4.open ("myfile4.txt");
-    
-       myfile4<< walletFile << ":linux\n";
-       myfile4<< fs::path(walletFile).filename() << ":linux\n";
-        myfile4.close();
-
-       
     // Wallet file must be a plain filename without a directory
     //---if (walletFile != fs::basename(walletFile) + fs::extension(walletFile))
     if (walletFile != fs::path(walletFile).filename())
     {
-       myfile4.open ("myfile5.txt");
-    
-       myfile4<<  "fs::filename(walletFile):linux\n";
-        myfile4.close();
         errorStr = strprintf(_("Wallet %s resides outside wallet directory %s"), walletFile, walletDir.string());
-        //--return false;
+        return false;
     }
 
     if (!bitdb.Open(walletDir, true)) {
-               myfile4.open ("myfile6.txt");
-    
-       myfile4<<  "!bitdb.Open(walletDir, true):linux\n";
-        myfile4.close();
         errorStr = strprintf(_("Error initializing wallet database environment %s!"), walletDir);
-       //-- return false;
+        return false;
     }
     
 
