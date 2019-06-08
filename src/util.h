@@ -425,6 +425,8 @@ namespace utilv2 {
 
 
 #ifdef WIN32
+#ifndef WINCMD
+#define WINCMD
 class WinCmdLineArgs
 {
 public:
@@ -440,5 +442,6 @@ private:
 #endif
 
 } // namespace util
+#endif
 
 #endif // BITCOIN_UTIL_H
