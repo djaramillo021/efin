@@ -5,7 +5,6 @@
 
 #include <util.h>
 #include <codecvt>
-#include <windows.h>
 #include <string>
 
 #include <chainparamsbase.h>
