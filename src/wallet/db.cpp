@@ -109,7 +109,7 @@ bool CDBEnv::Open(const fs::path& pathIn, bool retry)
 
     strPath = pathIn.string();
 
-    fs::path strPathTemp = strPath;
+    fs::path strPathTemp = pathIn;
 
     LogPrintf("CDBEnv::Open: strPathTemp=%s\n", strPathTemp.string()); 
 

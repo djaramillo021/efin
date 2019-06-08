@@ -31,6 +31,13 @@
 #include <boost/signals2/signal.hpp>
 #include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
 
+#ifdef WIN32
+#include <codecvt>
+#include <io.h> /* for _commit */
+#include <shellapi.h>
+#include <shlobj.h>
+#endif
+
 // Application startup time (used for uptime calculation)
 int64_t GetStartupTime();
 
@@ -410,5 +417,28 @@ std::unique_ptr<T> MakeUnique(Args&&... args)
 {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
+
+
+
+
+namespace utilv2 {
+
+
+#ifdef WIN32
+class WinCmdLineArgs
+{
+public:
+    WinCmdLineArgs();
+    ~WinCmdLineArgs();
+    std::pair<int, char**> get();
+
+private:
+    int argc;
+    char** argv;
+    std::vector<std::string> args;
+};
+#endif
+
+} // namespace util
 
 #endif // BITCOIN_UTIL_H

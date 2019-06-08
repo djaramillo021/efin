@@ -487,9 +487,13 @@ void ArgsManager::ParseParameters(int argc, const char* const argv[])
             str = str.substr(0, is_index);
         }
 #ifdef WIN32
+        std::transform(str.begin(), str.end(), str.begin(), ToLower);
+        if (str[0] == '/')
+            str[0] = '-';
+            /*
         boost::to_lower(str);
         if (boost::algorithm::starts_with(str, "/"))
-            str = "-" + str.substr(1);
+            str = "-" + str.substr(1);*/
 #endif
 
         if (str[0] != '-')
@@ -1116,6 +1120,23 @@ void ShrinkDebugFile()
 #ifdef WIN32
 fs::path GetSpecialFolderPath(int nFolder, bool fCreate)
 {
+    WCHAR pszPath[MAX_PATH] = L"";
+
+    if(SHGetSpecialFolderPathW(nullptr, pszPath, nFolder, fCreate))
+    {
+        return fs::path(pszPath);
+    }
+
+    LogPrintf("SHGetSpecialFolderPathW() failed, could not obtain requested path.\n");
+    return fs::path("");
+}
+#endif
+
+
+/*
+#ifdef WIN32
+fs::path GetSpecialFolderPath(int nFolder, bool fCreate)
+{
     char pszPath[MAX_PATH] = "";
 
     if(SHGetSpecialFolderPathA(nullptr, pszPath, nFolder, fCreate))
@@ -1127,14 +1148,28 @@ fs::path GetSpecialFolderPath(int nFolder, bool fCreate)
     return fs::path("");
 }
 #endif
+*/
 
+void runCommand(const std::string& strCommand)
+{
+    if (strCommand.empty()) return;
+#ifndef WIN32
+    int nErr = ::system(strCommand.c_str());
+#else
+    int nErr = ::_wsystem(std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().from_bytes(strCommand).c_str());
+#endif
+    if (nErr)
+        LogPrintf("runCommand error: system(%s) returned %d\n", strCommand, nErr);
+}
+/*
 void runCommand(const std::string& strCommand)
 {
     if (strCommand.empty()) return;
     int nErr = ::system(strCommand.c_str());
     if (nErr)
         LogPrintf("runCommand error: system(%s) returned %d\n", strCommand, nErr);
-}
+}*/
+
 
 void RenameThread(const char* name)
 {
@@ -1238,3 +1273,31 @@ int64_t GetStartupTime()
 {
     return nStartupTime;
 }
+
+
+namespace utilv2 {
+#ifdef WIN32
+WinCmdLineArgs::WinCmdLineArgs()
+{
+    wchar_t** wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> utf8_cvt;
+    argv = new char*[argc];
+    args.resize(argc);
+    for (int i = 0; i < argc; i++) {
+        args[i] = utf8_cvt.to_bytes(wargv[i]);
+        argv[i] = &*args[i].begin();
+    }
+    LocalFree(wargv);
+}
+
+WinCmdLineArgs::~WinCmdLineArgs()
+{
+    delete[] argv;
+}
+
+std::pair<int, char**> WinCmdLineArgs::get()
+{
+    return std::make_pair(argc, argv);
+}
+#endif
+} // namespace util
