@@ -6,10 +6,6 @@
 #include <config/bitcoin-config.h>
 #endif
 
-#include <iostream>
-#include <fstream>
-
-
 
 #include <fs.h>
 #include <qt/intro.h>
@@ -224,12 +220,6 @@ bool Intro::pickDataDirectory()
 
 
                 if (TryCreateDirectories(GUIUtil::qstringToBoostPath(dataDir))) {
-
-          std::ofstream myfile4;
-        myfile4.open ("myfile4gg.txt");
-
-       myfile4<< GUIUtil::qstringToBoostPath(dataDir).string() << ":linux\n";
-        myfile4.close();
                     // If a new data directory has been created, make wallets subdirectory too
                     TryCreateDirectories(GUIUtil::qstringToBoostPath(dataDir) / "wallets");
                 }
