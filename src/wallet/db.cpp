@@ -111,7 +111,7 @@ bool CDBEnv::Open(const fs::path& pathIn, bool retry)
 
     fs::path strPathTemp = strPath;
 
-    LogPrintf("CDBEnv::Open: strPathTemp=%s\n", strPathTemp.string(); 
+    LogPrintf("CDBEnv::Open: strPathTemp=%s\n", strPathTemp.string()); 
 
     if (!LockDirectory(pathIn, ".walletlock")) {
         LogPrintf("Cannot obtain a lock on wallet directory %s. Another instance of efin may be using it.\n", strPath);
