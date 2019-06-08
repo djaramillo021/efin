@@ -107,7 +107,7 @@ bool CDBEnv::Open(const fs::path& pathIn, bool retry)
 
     boost::this_thread::interruption_point();
 
-    strPath(pathIn.string())
+    strPath(pathIn.string());
 
     //--strPath = pathIn.string();
     if (!LockDirectory(pathIn, ".walletlock")) {
