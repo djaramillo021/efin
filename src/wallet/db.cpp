@@ -6,7 +6,7 @@
 #include <wallet/db.h>
 
 #include <string>
-#include <filesystem>
+
 
 
 #include <iostream>
@@ -331,14 +331,13 @@ bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walle
         myfile4.open ("myfile4.txt");
     
        myfile4<< walletFile << ":linux\n";
-       myfile4<< fsyst::path(walletFile).filename() << ":linux\n";
+       myfile4<< fs::path(walletFile).filename() << ":linux\n";
         myfile4.close();
 
-
-
+       
     // Wallet file must be a plain filename without a directory
     //---if (walletFile != fs::basename(walletFile) + fs::extension(walletFile))
-    if (walletFile != fsyst::path(walletFile).filename())
+    if (walletFile != fs::path(walletFile).filename())
     {
        myfile4.open ("myfile5.txt");
     
