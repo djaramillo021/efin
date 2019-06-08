@@ -5,9 +5,10 @@
 
 #include <util.h>
 
-#ifdef WIN32
+
 #include <codecvt>
-#endif
+
+
 
 
 #include <chainparamsbase.h>
@@ -407,7 +408,7 @@ int LogPrintStr(const std::string &str)
 static std::map<std::string, std::unique_ptr<boost::interprocess::file_lock>> dir_locks;
 /** Mutex to protect dir_locks. */
 static std::mutex cs_dir_locks;
-/*
+
 bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only)
 {
     std::lock_guard<std::mutex> ulock(cs_dir_locks);
@@ -422,8 +423,9 @@ bool LockDirectory(const fs::path& directory, const std::string lockfile_name, b
     FILE* file = fsbridge::fopen(pathLockFile, "a");
     if (file) fclose(file);
 
-    try {
-        auto lock = MakeUnique<boost::interprocess::file_lock>(pathLockFile.string().c_str());
+
+    //try {
+        auto lock = MakeUniqueMakeUnique<fsbridge::FileLock>(pathLockFile.string().c_str());
         if (!lock->try_lock()) {
             return false;
         }
@@ -431,38 +433,12 @@ bool LockDirectory(const fs::path& directory, const std::string lockfile_name, b
             // Lock successful and we're not just probing, put it into the map
             dir_locks.emplace(pathLockFile.string(), std::move(lock));
         }
+    /*    
     } catch (const boost::interprocess::interprocess_exception& e) {
         return error("Error while attempting to lock directory %s: %s", directory.string(), e.what());
-    }
+    }*/
     return true;
 }
-*/
-
-
-bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only)
-{
-    std::lock_guard<std::mutex> ulock(cs_dir_locks);
-    fs::path pathLockFile = directory / lockfile_name;
-
-    // If a lock for this directory already exists in the map, don't try to re-lock it
-    if (dir_locks.count(pathLockFile.string())) {
-        return true;
-    }
-
-    // Create empty lock file if it doesn't exist.
-    FILE* file = fsbridge::fopen(pathLockFile, "a");
-    if (file) fclose(file);
-    auto lock = MakeUnique<fsbridge::FileLock>(pathLockFile);
-    if (!lock->TryLock()) {
-        return error("Error while attempting to lock directory %s: %s", directory.string(), lock->GetReason());
-    }
-    if (!probe_only) {
-        // Lock successful and we're not just probing, put it into the map
-        dir_locks.emplace(pathLockFile.string(), std::move(lock));
-    }
-    return true;
-}
-
 
 
 
