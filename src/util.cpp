@@ -4,6 +4,12 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <util.h>
+
+#ifdef WIN32
+#include <codecvt>
+#endif
+
+
 #include <chainparamsbase.h>
 #include <random.h>
 #include <serialize.h>
@@ -1167,7 +1173,15 @@ void SetupEnvironment()
     // A dummy locale is used to extract the internal default locale, used by
     // fs::path, which is then used to explicitly imbue the path.
     std::locale loc = fs::path::imbue(std::locale::classic());
-    fs::path::imbue(loc);
+    
+    
+    //--fs::path::imbue(loc);
+    #ifndef WIN32
+        fs::path::imbue(loc);
+    #else
+        fs::path::imbue(std::locale(loc, new std::codecvt_utf8_utf16<wchar_t>()));
+    #endif
+
 }
 
 bool SetupNetworking()
