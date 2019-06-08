@@ -4,6 +4,10 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <util.h>
+#include <codecvt>
+#include <windows.h>
+#include <string>
+
 #include <chainparamsbase.h>
 #include <random.h>
 #include <serialize.h>
