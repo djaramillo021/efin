@@ -27,7 +27,7 @@
 
 #include <boost/thread.hpp>
 
-namespace fsyst = std::filesystem;
+
 
 namespace {
 //! Make sure database has a unique fileid within the environment. If it
