@@ -107,9 +107,12 @@ bool CDBEnv::Open(const fs::path& pathIn, bool retry)
 
     boost::this_thread::interruption_point();
 
-    strPath(pathIn.string());
+    strPath = pathIn.string();
 
-    //--strPath = pathIn.string();
+    fs::path strPathTemp = strPath;
+
+    LogPrintf("CDBEnv::Open: strPathTemp=%s\n", strPathTemp.string(); 
+
     if (!LockDirectory(pathIn, ".walletlock")) {
         LogPrintf("Cannot obtain a lock on wallet directory %s. Another instance of efin may be using it.\n", strPath);
         return false;
@@ -134,7 +137,8 @@ bool CDBEnv::Open(const fs::path& pathIn, bool retry)
     dbenv->set_flags(DB_AUTO_COMMIT, 1);
     dbenv->set_flags(DB_TXN_WRITE_NOSYNC, 1);
     dbenv->log_set_config(DB_LOG_AUTO_REMOVE, 1);
-    int ret = dbenv->open(strPath.c_str(),
+    //int ret = dbenv->open(strPath.c_str(),
+    int ret = dbenv->open(strPathTemp.string().c_str(),
                          DB_CREATE |
                              DB_INIT_LOCK |
                              DB_INIT_LOG |
