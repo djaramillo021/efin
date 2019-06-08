@@ -107,7 +107,9 @@ bool CDBEnv::Open(const fs::path& pathIn, bool retry)
 
     boost::this_thread::interruption_point();
 
-    strPath = pathIn.string();
+    strPath(pathIn.string())
+
+    //--strPath = pathIn.string();
     if (!LockDirectory(pathIn, ".walletlock")) {
         LogPrintf("Cannot obtain a lock on wallet directory %s. Another instance of efin may be using it.\n", strPath);
         return false;
@@ -310,7 +312,7 @@ bool CDB::VerifyEnvironment(const std::string& walletFile, const fs::path& walle
         return false;
     }
 
-    if (!bitdb.Open(walletDir.string(), true)) {
+    if (!bitdb.Open(walletDir, true)) {
         errorStr = strprintf(_("Error initializing wallet database environment %s!"), walletDir);
         return false;
     }
