@@ -7,7 +7,6 @@
 #include <config/bitcoin-config.h>
 #endif
 
-#include <util/utilEncodev2.h>
 #include <chainparams.h>
 #include <clientversion.h>
 #include <compat.h>
