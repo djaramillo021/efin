@@ -66,6 +66,8 @@ struct BasicTestingSetup {
     ~BasicTestingSetup();
 
     fs::path SetDataDir(const std::string& name);
+private:
+    const fs::path m_path_root;
 };
 
 /** Testing setup that configures a complete environment.
