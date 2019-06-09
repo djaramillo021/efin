@@ -912,7 +912,7 @@ fs::path GetConfigFile(const std::string& confPath)
 
 void ArgsManager::ReadConfigFile(const std::string& confPath)
 {
-    fs::ifstream streamConfig(GetConfigFile(confPath));
+    fsbridge::ifstream streamConfig(GetConfigFile(confPath));
     if (!streamConfig.good())
         return; // No efin.conf file is OK
 
