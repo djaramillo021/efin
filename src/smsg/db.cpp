@@ -44,9 +44,10 @@ bool SecMsgDB::Open(const char *pszMode)
     {
         LogPrintf("%s: DB does not exist.\n", __func__);
         return false;
+    }else{
+        TryCreateDirectories(fullpath);
+        LogPrintf("Opening LevelDB[smsgDB] in %s\n", fullpath.string());
     }
-    TryCreateDirectories(fullpath);
-    LogPrintf("Opening LevelDB[smsgDB] in %s\n", fullpath.string());
 
     leveldb::Options options;
     options.create_if_missing = fCreate;
