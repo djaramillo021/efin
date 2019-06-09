@@ -709,7 +709,7 @@ int CSMSG::ReadIni()
 
     FILE *fp;
     errno = 0;
-    if (!(fp = fopen(fullpath.string().c_str(), "r")))
+    if (!(fp = fsbridge::fopen(fullpath, "r")))
         return errorN(SMSG_GENERAL_ERROR, "%s: Error opening file: %s", __func__, strerror(errno));
 
     char cLine[512];
