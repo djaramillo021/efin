@@ -64,6 +64,8 @@ struct BasicTestingSetup {
 
     explicit BasicTestingSetup(const std::string& chainName = CBaseChainParams::MAIN, bool fEfinModeIn = false);
     ~BasicTestingSetup();
+
+    fs::path SetDataDir(const std::string& name);
 };
 
 /** Testing setup that configures a complete environment.

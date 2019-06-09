@@ -69,6 +69,14 @@ BasicTestingSetup::~BasicTestingSetup()
     ECC_Stop();
 }
 
+fs::path BasicTestingSetup::SetDataDir(const std::string& name)
+{
+    fs::path ret = m_path_root / name;
+    fs::create_directories(ret);
+    gArgs.ForceSetArg("-datadir", ret.string());
+    return ret;
+}
+
 TestingSetup::TestingSetup(const std::string& chainName, bool fEfinModeIn) : BasicTestingSetup(chainName, fEfinModeIn)
 {
     const CChainParams& chainparams = Params();
