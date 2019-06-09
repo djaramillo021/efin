@@ -782,7 +782,8 @@ int CSMSG::WriteIni()
 
     FILE *fp;
     errno = 0;
-    if (!(fp = fopen(fullpath.string().c_str(), "w")))
+    //if (!(fp = fopen(fullpath.string().c_str(), "w")))
+    if (!(fp = fsbridge::fopen(fullpath, "w")))
         return errorN(SMSG_GENERAL_ERROR, "%s: Error opening file: %s", __func__, strerror(errno));
 
     if (fwrite("[Options]\n", sizeof(char), 10, fp) != 10)
