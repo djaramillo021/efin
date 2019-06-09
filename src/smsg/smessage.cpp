@@ -549,8 +549,7 @@ int CSMSG::BuildBucketSet()
             std::set<SecMsgToken> &tokenSet = bucket.setTokens;
 
             FILE *fp;
-            if (!(fp = fsbridge::fopen((*itd).path(), "rb")))
-            {
+            if (!(fp = fopen((*itd).path().string().c_str(), "rb"))) {
                 LogPrintf("Error opening file: %s\n", strerror(errno));
                 continue;
             };
@@ -709,7 +708,7 @@ int CSMSG::ReadIni()
 
     FILE *fp;
     errno = 0;
-    if (!(fp = fsbridge::fopen(fullpath, "r")))
+    if (!(fp = fopen(fullpath.string().c_str(), "r")))
         return errorN(SMSG_GENERAL_ERROR, "%s: Error opening file: %s", __func__, strerror(errno));
 
     char cLine[512];
@@ -782,8 +781,7 @@ int CSMSG::WriteIni()
 
     FILE *fp;
     errno = 0;
-    //if (!(fp = fopen(fullpath.string().c_str(), "w")))
-    if (!(fp = fsbridge::fopen(fullpath, "w")))
+    if (!(fp = fopen(fullpath.string().c_str(), "w")))
         return errorN(SMSG_GENERAL_ERROR, "%s: Error opening file: %s", __func__, strerror(errno));
 
     if (fwrite("[Options]\n", sizeof(char), 10, fp) != 10)
@@ -1941,7 +1939,7 @@ bool CSMSG::ScanBuckets()
             LOCK(cs_smsg);
             FILE *fp;
             errno = 0;
-            if (!(fp = fsbridge::fopen((*itd).path(), "rb")))
+            if (!(fp = fopen((*itd).path().string().c_str(), "rb")))
             {
                 LogPrintf("Error opening file: %s\n", strerror(errno));
                 continue;
@@ -2129,7 +2127,7 @@ int CSMSG::WalletUnlocked()
             LOCK(cs_smsg);
             FILE *fp;
             errno = 0;
-            if (!(fp = fsbridge::fopen((*itd).path(), "rb")))
+            if (!(fp = fopen((*itd).path().string().c_str(), "rb")))
             {
                 LogPrintf("Error opening file: %s\n", strerror(errno));
                 continue;
@@ -2641,7 +2639,7 @@ int CSMSG::Retrieve(SecMsgToken &token, std::vector<uint8_t> &vchData)
 
     FILE *fp;
     errno = 0;
-    if (!(fp = fsbridge::fopen(fullpath, "rb")))
+    if (!(fp = fopen(fullpath.string().c_str(), "rb")))
         return errorN(SMSG_GENERAL_ERROR, "%s - Can't open file: %s\nPath %s.", __func__, strerror(errno), fullpath.string());
 
     errno = 0;
@@ -2828,7 +2826,7 @@ int CSMSG::StoreUnscanned(const uint8_t *pHeader, const uint8_t *pPayload, uint3
 
     FILE *fp;
     errno = 0;
-    if (!(fp = fsbridge::fopen(fullpath, "ab")))
+    if (!(fp = fopen(fullpath.string().c_str(), "ab")))
     {
         return errorN(SMSG_GENERAL_ERROR, "%s - Can't open file, strerror: %s.", __func__, strerror(errno));
     };
@@ -2919,7 +2917,7 @@ int CSMSG::Store(const uint8_t *pHeader, const uint8_t *pPayload, uint32_t nPayl
 
     FILE *fp;
     errno = 0;
-    if (!(fp = fsbridge::fopen(fullpath, "ab")))
+    if (!(fp = fopen(fullpath.string().c_str(), "ab")))
         return errorN(SMSG_GENERAL_ERROR, "fopen failed: %s.", strerror(errno));
 
     // On windows ftell will always return 0 after fopen(ab), call fseek to set.
@@ -3401,7 +3399,7 @@ int CSMSG::Send(CKeyID &addressFrom, CKeyID &addressTo, std::string &message,
     {
         FILE *fp;
         errno = 0;
-        if (!(fp = fsbridge::fopen(message, "rb")))
+        if (!(fp = fopen(message.c_str(), "rb")))
             return errorN(SMSG_GENERAL_ERROR, sError, __func__, "fopen failed: %s.", strerror(errno));
 
         if (fseek(fp, 0, SEEK_END) != 0)

@@ -16,6 +16,7 @@
 #include <core_io.h>
 #include <base58.h>
 #include <rpc/util.h>
+#include <fs.h>
 
 #ifdef ENABLE_WALLET
 #include <wallet/wallet.h>
@@ -1412,31 +1413,30 @@ UniValue smsgone(const JSONRPCRequest &request)
             throw JSONRPCError(RPC_INTERNAL_ERROR, "Unknown message id.");
         };
 
-        if (options.isObject())
-        {
+        if (options.isObject()) {
             options = request.params[1].get_obj();
-            if (options["delete"].isBool() && options["delete"].get_bool() == true)
-            {
-                if (!dbMsg.EraseSmesg(chKey))
+            if (options["delete"].isBool() && options["delete"].get_bool() == true) {
+                if (!dbMsg.EraseSmesg(chKey)) {
                     throw JSONRPCError(RPC_INTERNAL_ERROR, "EraseSmesg failed.");
+                }
                 result.pushKV("operation", "Deleted");
-            } else
-            {
+            } else {
                 // Can't mix delete and other operations
-                if (options["setread"].isBool())
-                {
+                if (options["setread"].isBool()) {
                     bool nv = options["setread"].get_bool();
-                    if (nv)
+                    if (nv) {
                         smsgStored.status &= ~SMSG_MASK_UNREAD;
-                    else
+                    } else {
                         smsgStored.status |= SMSG_MASK_UNREAD;
+                    }
 
-                    if (!dbMsg.WriteSmesg(chKey, smsgStored))
+                    if (!dbMsg.WriteSmesg(chKey, smsgStored)) {
                         throw JSONRPCError(RPC_INTERNAL_ERROR, "WriteSmesg failed.");
+                    }
                     result.pushKV("operation", strprintf("Set read status to: %s", nv ? "true" : "false"));
-                };
-            };
-        };
+                }
+            }
+        }
     }
 
     result.pushKV("msgid", sMsgId);
@@ -1456,13 +1456,13 @@ UniValue smsgone(const JSONRPCRequest &request)
     result.pushKV("payloadsize", (int)nPayload);
 
     std::string sEnc;
-    if (options.isObject() && options["encoding"].isStr())
+    if (options.isObject() && options["encoding"].isStr()) {
         sEnc = options["encoding"].get_str();
+    }
 
     int rv;
     if ((rv = smsgModule.Decrypt(false, fInbox ? smsgStored.addrTo : smsgStored.addrOutbox,
-        &smsgStored.vchMessage[0], &smsgStored.vchMessage[smsg::SMSG_HDR_LEN], nPayload, msg)) == 0)
-    {
+        &smsgStored.vchMessage[0], &smsgStored.vchMessage[smsg::SMSG_HDR_LEN], nPayload, msg)) == 0) {
         result.pushKV("addressfrom", msg.sFromAddress);
 
         if (sEnc == "")
@@ -1472,21 +1472,17 @@ UniValue smsgone(const JSONRPCRequest &request)
             else
                 result.pushKV("hex", HexStr(msg.vchMessage));
         } else
-        if (sEnc == "ascii")
-        {
+        if (sEnc == "ascii") {
             result.pushKV("text", std::string((char*)&msg.vchMessage[0]));
         } else
-        if (sEnc == "hex")
-        {
+        if (sEnc == "hex") {
             result.pushKV("hex", HexStr(msg.vchMessage));
-        } else
-        {
+        } else {
             result.pushKV("unknown_encoding", sEnc);
-        };
-    } else
-    {
+        }
+    } else {
         result.pushKV("error", "decrypt failed");
-    };
+    }
 
     return result;
 }
