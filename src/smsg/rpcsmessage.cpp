@@ -987,8 +987,8 @@ UniValue smsgbuckets(const JSONRPCRequest &request)
                 objM.pushKV("hash", sHash);
                 objM.pushKV("last changed", part::GetTimeString(it->second.timeChanged, cbuf, sizeof(cbuf)));
 
-                boost::filesystem::path fullPath = GetDataDir() / "smsgstore" / sFile;
-                if (!boost::filesystem::exists(fullPath))
+                fs::path fullPath = GetDataDir() / "smsgstore" / sFile;
+                if (!fs::exists(fullPath))
                 {
                     // If there is a file for an empty bucket something is wrong.
                     if (tokenSet.size() == 0)
@@ -999,10 +999,10 @@ UniValue smsgbuckets(const JSONRPCRequest &request)
                 {
                     try {
                         uint64_t nFBytes = 0;
-                        nFBytes = boost::filesystem::file_size(fullPath);
+                        nFBytes = fs::file_size(fullPath);
                         nBytes += nFBytes;
                         objM.pushKV("file size", part::BytesReadable(nFBytes));
-                    } catch (const boost::filesystem::filesystem_error& ex)
+                    } catch (const fs::filesystem_error& ex)
                     {
                         objM.pushKV("file size, error", ex.what());
                     };
@@ -1035,9 +1035,9 @@ UniValue smsgbuckets(const JSONRPCRequest &request)
                 std::string sFile = std::to_string(it->first) + "_01.dat";
 
                 try {
-                    boost::filesystem::path fullPath = GetDataDir() / "smsgstore" / sFile;
-                    boost::filesystem::remove(fullPath);
-                } catch (const boost::filesystem::filesystem_error& ex)
+                    fs::path fullPath = GetDataDir() / "smsgstore" / sFile;
+                    fs::remove(fullPath);
+                } catch (const fs::filesystem_error& ex)
                 {
                     //objM.push_back(Pair("file size, error", ex.what()));
                     LogPrintf("Error removing bucket file %s.\n", ex.what());

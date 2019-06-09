@@ -1994,7 +1994,7 @@ bool CSMSG::ScanBuckets()
             // Remove wl file when scanned
             try {
                 fs::remove((*itd).path());
-            } catch (const boost::filesystem::filesystem_error &ex)
+            } catch (const fs::filesystem_error &ex)
             {
                 LogPrintf("Error removing wl file %s - %s\n", fileName, ex.what());
                 return false;
@@ -2809,7 +2809,7 @@ int CSMSG::StoreUnscanned(const uint8_t *pHeader, const uint8_t *pPayload, uint3
     fs::path pathSmsgDir;
     try {
         pathSmsgDir = GetDataDir() / "smsgstore";
-        fs::create_directory(pathSmsgDir);
+        TryCreateDirectories(pathSmsgDir);
     } catch (const fs::filesystem_error& ex)
     {
         return errorN(SMSG_GENERAL_ERROR, "%s - Failed to create directory %s - %s.", __func__, pathSmsgDir.string(), ex.what());
@@ -2865,7 +2865,7 @@ int CSMSG::Store(const uint8_t *pHeader, const uint8_t *pPayload, uint32_t nPayl
     fs::path pathSmsgDir;
     try {
         pathSmsgDir = GetDataDir() / "smsgstore";
-        fs::create_directory(pathSmsgDir);
+        TryCreateDirectories(pathSmsgDir);
     } catch (const fs::filesystem_error& ex)
     {
         return errorN(SMSG_GENERAL_ERROR, "Failed to create directory %s - %s.", pathSmsgDir.string(), ex.what());
