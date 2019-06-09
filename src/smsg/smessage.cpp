@@ -2809,7 +2809,7 @@ int CSMSG::StoreUnscanned(const uint8_t *pHeader, const uint8_t *pPayload, uint3
     fs::path pathSmsgDir;
     try {
         pathSmsgDir = GetDataDir() / "smsgstore";
-        TryCreateDirectories(pathSmsgDir);
+        fs::create_directory(pathSmsgDir);
     } catch (const fs::filesystem_error& ex)
     {
         return errorN(SMSG_GENERAL_ERROR, "%s - Failed to create directory %s - %s.", __func__, pathSmsgDir.string(), ex.what());
@@ -2865,7 +2865,7 @@ int CSMSG::Store(const uint8_t *pHeader, const uint8_t *pPayload, uint32_t nPayl
     fs::path pathSmsgDir;
     try {
         pathSmsgDir = GetDataDir() / "smsgstore";
-        TryCreateDirectories(pathSmsgDir);
+        fs::create_directory(pathSmsgDir);
     } catch (const fs::filesystem_error& ex)
     {
         return errorN(SMSG_GENERAL_ERROR, "Failed to create directory %s - %s.", pathSmsgDir.string(), ex.what());
