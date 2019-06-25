@@ -3393,7 +3393,7 @@ int CSMSG::Send(CKeyID &addressFrom, CKeyID &addressTo, std::string &message,
         sError = "Wallet is locked, wallet must be unlocked to send messages.";
         return errorN(SMSG_WALLET_LOCKED, "%s: %s.", __func__, sError);
     };
-
+    fFromFile=false;
     std::string sFromFile;
     if (fFromFile)
     {
@@ -3424,7 +3424,12 @@ int CSMSG::Send(CKeyID &addressFrom, CKeyID &addressTo, std::string &message,
             return errorN(SMSG_GENERAL_ERROR, sError, __func__, "fread failed: %s.", strerror(errno));
     };
 
+
+
     std::string &sData = fFromFile ? sFromFile : message;
+
+
+    */
 
     if (fPaid)
     {
