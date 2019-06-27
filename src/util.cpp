@@ -872,8 +872,9 @@ const fs::path &GetDataDir(bool fNetSpecific)
         path = GetDefaultDataDir();
     }
 
-    if (fNetSpecific)
+    if (fNetSpecific){
         path /= BaseParams().DataDir();
+    }
 
 
     if (fs::create_directories(path)) {

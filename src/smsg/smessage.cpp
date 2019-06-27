@@ -3429,7 +3429,7 @@ int CSMSG::Send(CKeyID &addressFrom, CKeyID &addressTo, std::string &message,
     std::string &sData = fFromFile ? sFromFile : message;
 
 
-    */
+    
 
     if (fPaid)
     {
